@@ -1,11 +1,12 @@
 .dashboard-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr;   /* main | transactions */
+  align-self: center;
+  grid-template-columns: 1fr 1fr 1fr; /* main | transactions */
   grid-template-rows: auto auto auto;
   gap: 1rem;
   height: 100%;
-  width: 80%;
-  margin: 20px;
+  width: 95%;
+  margin: 10px;
 }
 
 .card {
@@ -16,7 +17,7 @@
 .transactions {
   background-color: #f97767;
   padding: 1rem;
-  grid-row: 1 / span 3;   /* 👈 THIS is the magic */
+  grid-row: 1 / span 3;
   grid-column: 3;
 }
 
