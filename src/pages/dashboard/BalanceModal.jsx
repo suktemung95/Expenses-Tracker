@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { supabase } from "../../supabaseClient.jsx";
 
-export default function BalanceModal({ refreshBalance }) {
+export default function BalanceModal({ handleRefresh, setShowModal }) {
   const [amount, setAmount] = useState(0);
   const [desc, setDesc] = useState("");
   const [type, setType] = useState("");
@@ -33,13 +33,14 @@ export default function BalanceModal({ refreshBalance }) {
       setDesc("");
       setType("");
     }
-    refreshBalance();
+    handleRefresh();
   };
   return (
     <div
       className="position-fixed top-50 start-50 translate-middle bg-secondary p-4 rounded"
       style={{ zIndex: "1000" }}
     >
+      <button onClick={() => setShowModal(false)}>Close!</button>
       <form className="d-flex flex-column">
         Enter your transaction here!
         <label htmlFor="amount">Amount:</label>
@@ -81,7 +82,7 @@ export default function BalanceModal({ refreshBalance }) {
           />
         </span>
         <button className="btn btn-light mt-3" onClick={(e) => handleSubmit(e)}>
-          Close
+          Submit
         </button>
       </form>
     </div>
