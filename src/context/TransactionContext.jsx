@@ -7,6 +7,7 @@ export const TransactionContextProvider = ({ children }) => {
 
   useEffect(() => {
     const fetchUser = async () => {
+      console.log("Trying to setUser");
       const { data, error } = await supabase.auth.getUser();
       if (data?.user) setUser(data.user);
     };
@@ -36,6 +37,7 @@ export const TransactionContextProvider = ({ children }) => {
       console.log("Net balance:", netBalance);
       return netBalance;
     } catch (err) {
+      console.log("ID is:", userID);
       console.error("Error calculating balance:", err.message);
       return 0;
     }
@@ -65,7 +67,9 @@ export const TransactionContextProvider = ({ children }) => {
   };
 
   return (
-    <TransactionContext.Provider value={{ getBalance, getRecentTransactions }}>
+    <TransactionContext.Provider
+      value={{ user, getBalance, getRecentTransactions }}
+    >
       {children}
     </TransactionContext.Provider>
   );

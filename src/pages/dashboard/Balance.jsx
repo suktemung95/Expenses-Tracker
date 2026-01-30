@@ -2,18 +2,35 @@ import { useState, useEffect } from "react";
 import BalanceModal from "./BalanceModal";
 import { TransactionsFunctions } from "../../context/TransactionContext.jsx";
 
+import { supabase } from "../../supabaseClient.jsx";
+
 export default function Balance() {
   const [balance, setBalance] = useState(0);
   const [prevBalance, setPrevBalance] = useState(0);
 
-  const { getBalance, getRecentTransactions } = TransactionsFunctions();
+  const { user, getBalance, getRecentTransactions } = TransactionsFunctions();
   const [showModal, setShowModal] = useState(false);
+
+  const [userID, setUserID] = useState(null);
+  const [loading, setLoading] = useState(true);
 
   const handleRefresh = () => {
     setBalance(getBalance());
     getRecentTransactions();
     setShowModal(false);
   };
+
+  useEffect(() => {
+    if (!user) return; // wait until context has a user
+
+    setLoading(false);
+    const fetchBalance = async () => {
+      const newBalance = await getBalance();
+      setBalance(newBalance);
+    };
+
+    fetchBalance();
+  }, [user]);
 
   return (
     <>
