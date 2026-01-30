@@ -9,7 +9,34 @@ export default function Balance() {
   const [showModal, setShowModal] = useState(false);
 
   const refreshBalance = async (e) => {
-    // Insert into Supabase
+    try {
+      const {
+        data: { user },
+      } = await supabase.auth.getUser();
+      const userID = user.id;
+
+      // get all transactions for the user
+      const { data: transactions, error } = await supabase
+        .from("transactions")
+        .select("amount, type")
+        .eq("user_id", userID);
+
+      if (error) throw error;
+      console.log("All transactions: ", transactions);
+
+      // calculate net balance
+      const netBalance = transactions.reduce((acc, tx) => {
+        if (tx.type === "income") return acc + parseFloat(tx.amount);
+        if (tx.type === "expense") return acc - parseFloat(tx.amount);
+        return acc;
+      }, 0);
+
+      console.log("Net balance:", netBalance);
+      setBalance(netBalance);
+    } catch (err) {
+      console.error("Error calculating balance:", err.message);
+      return 0;
+    }
     setShowModal(false);
   };
 

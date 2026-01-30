@@ -15,17 +15,15 @@ export default function BalanceModal({ refreshBalance }) {
     } = await supabase.auth.getUser();
     console.log(user.id);
 
-    const { data, error } = await supabase
-      .from("transactions")
-      .insert([
-        {
-          user_id: user.id,
-          id: id,
-          amount: amount,
-          description: desc,
-          type: type,
-        },
-      ]);
+    const { data, error } = await supabase.from("transactions").insert([
+      {
+        user_id: user.id,
+        id: id,
+        amount: amount,
+        description: desc,
+        type: type,
+      },
+    ]);
 
     if (error) {
       console.error("Error inserting:", error);
