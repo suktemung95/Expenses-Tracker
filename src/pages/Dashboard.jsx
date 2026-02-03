@@ -1,6 +1,7 @@
 import { UserAuth } from "../context/AuthContext";
 import Header from "../components/Header.jsx";
 import SettingsSidebar from "../components/SettingsSidebar.jsx";
+import { useState } from 'react'
 
 import "./Dashboard.css";
 import Balance from "./dashboard/Balance.jsx";
@@ -8,6 +9,7 @@ import Transactions from "./dashboard/Transactions.jsx";
 import { TransactionContextProvider } from "../context/TransactionContext.jsx";
 
 export default function Dashboard() {
+
   const { session } = UserAuth();
 
   console.log("Dashboard session:", session);
@@ -30,7 +32,8 @@ export default function Dashboard() {
               <div className="card">Goals</div>
               <div className="card">Spending Overview</div>
               <div className="transactions">
-                Transactions <Transactions />
+                Transactions
+                <Transactions />
               </div>
             </div>
           </div>

@@ -4,12 +4,16 @@ const TransactionContext = createContext();
 
 export const TransactionContextProvider = ({ children }) => {
   const [user, setUser] = useState();
+  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     const fetchUser = async () => {
       console.log("Trying to setUser");
       const { data, error } = await supabase.auth.getUser();
-      if (data?.user) setUser(data.user);
+      if (data?.user) {
+        setUser(data.user);
+        setLoading(false)
+      }
     };
     fetchUser();
   }, []);
@@ -68,7 +72,7 @@ export const TransactionContextProvider = ({ children }) => {
 
   return (
     <TransactionContext.Provider
-      value={{ user, getBalance, getRecentTransactions }}
+      value={{ loading, user, getBalance, getRecentTransactions }}
     >
       {children}
     </TransactionContext.Provider>

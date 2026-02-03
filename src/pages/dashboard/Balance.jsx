@@ -8,29 +8,24 @@ export default function Balance() {
   const [balance, setBalance] = useState(0);
   const [prevBalance, setPrevBalance] = useState(0);
 
-  const { user, getBalance, getRecentTransactions } = TransactionsFunctions();
+  const { loading, getBalance } = TransactionsFunctions();
   const [showModal, setShowModal] = useState(false);
-
-  const [userID, setUserID] = useState(null);
-  const [loading, setLoading] = useState(true);
 
   const handleRefresh = () => {
     setBalance(getBalance());
-    getRecentTransactions();
     setShowModal(false);
   };
 
   useEffect(() => {
-    if (!user) return; // wait until context has a user
+    if (loading) return; // wait until context has a user
 
-    setLoading(false);
     const fetchBalance = async () => {
       const newBalance = await getBalance();
       setBalance(newBalance);
     };
 
     fetchBalance();
-  }, [user]);
+  }, [loading]);
 
   return (
     <>
