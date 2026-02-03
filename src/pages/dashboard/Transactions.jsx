@@ -3,19 +3,16 @@ import { useEffect, useState } from 'react'
 export default function Transactions() {
   const { loading, getRecentTransactions } = TransactionsFunctions();
 
-  const { transactions, setTransactions } = useState()
-
-  console.log('transactions test', transactions)
+  const [transactions, setTransactions] = useState()
 
   useEffect(() => {
-    console.log('using effect')
     if (loading) return; // wait until context has a user
 
-    console.log('Using effect after loading')
     const fetchTransactions = async () => {
+      console.log('fetching')
       const newTransactions = await getRecentTransactions();
-      setTransactions(newTransactions);
-      console.log("Transactions: ", transactions)
+      setTransactions(newTransactions)
+      console.log("Transactions after set: ", transactions)
     };
 
     fetchTransactions();
