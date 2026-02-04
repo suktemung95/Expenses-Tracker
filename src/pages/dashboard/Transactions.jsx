@@ -12,7 +12,7 @@ export default function Transactions() {
       console.log('fetching')
       const newTransactions = await getRecentTransactions();
       setTransactions(newTransactions)
-      console.log("Transactions after set: ", transactions)
+      console.log("Transactions after set: ", newTransactions)
     };
 
     fetchTransactions();
